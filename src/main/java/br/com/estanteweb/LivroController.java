@@ -110,11 +110,16 @@ public String editar(@PathVariable Long id, Model model, HttpSession session) {
         return "redirect:/livros/" + id;
     }
 
-    @GetMapping("/livros/{id}/excluir")
-    public String confirmarExclusao(@PathVariable Long id, HttpSession session, Model model) {
-        if (session.getAttribute("usuarioLogado") == null) {
-            return "redirect:/login";
-        }
+   @PostMapping("/livros/{id}/excluir")
+public String excluir(@PathVariable Long id, HttpSession session) {
+
+    if (session.getAttribute("usuarioLogado") == null) {
+        return "redirect:/login";
+    }
+
+    repositorio.excluir(id);
+    return "redirect:/livros/html";
+}
 
         Livro livro = repositorio.buscarPorId(id);
 
